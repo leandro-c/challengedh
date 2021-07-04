@@ -49,6 +49,4 @@ export const answerSlice = createSlice({
 
 export const { increment, post } = answerSlice.actions;
 
-export const selectAnswers = (state) => state.answer.data;
-
 export default answerSlice.reducer;
