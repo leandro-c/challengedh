@@ -2,7 +2,7 @@ import React from 'react';
 /* import logo from './logo.svg'; */
 import logo from './logo-DH.png'
 import { Answers } from './features/answerform/Answers';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
