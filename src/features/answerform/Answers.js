@@ -7,6 +7,8 @@ import {
 /* import styles from './Counter.module.css'; */
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
+import './../../App.scss';
+
 
 export function Answers() {
     const dispatch = useDispatch();
@@ -37,13 +39,19 @@ export function Answers() {
                 <input 
                     type="text" 
                     placeholder="question" 
-                    name="question" 
+                    name="question"
+                    value={formik.values.question} 
+                    className={
+                        formik.errors.question && formik.touched.question
+                            ? "error"
+                            : "text-input"
+                        }
                     onChange={formik.handleChange}/>
                     {formik.errors.question && formik.touched.question && (
-                        <div className="">{formik.errors.question}</div>
+                        <div className="error">{formik.errors.question}</div>
                     )}
                 <button disabled={attempt>=3} type="submit">submit</button>
-                <button type="button">clean</button>
+                <button type="button" onClick={formik.handleReset}>clean</button>
             </form>
         </>
     )

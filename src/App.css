@@ -67,4 +67,13 @@
             transform: translateY(0px);
   }
 }
+
+.error {
+  border-color: red;
+  color: red;
+}
+
+.text-input {
+  border-color: black;
+}
 /*# sourceMappingURL=App.css.map */
