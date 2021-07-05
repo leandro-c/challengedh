@@ -5,6 +5,8 @@ import {
     postAnswers
 } from './answerSlice';
 /* import styles from './Counter.module.css'; */
+import {useFormik} from 'formik'
+import * as Yup from 'yup';
 
 export function Answers() {
     const dispatch = useDispatch();
@@ -13,20 +15,36 @@ export function Answers() {
     const status = useSelector(state => state.answers.status);
     const error = useSelector(state => state.answers.error);
 
-    const onClick =() => {
-        dispatch(increment());
-        dispatch(postAnswers({id:44}));
-    }
+    const formik = useFormik({
+        initialValues:{
+            question: ""
+        },
+        validationSchema: Yup.object({
+            question: Yup.string().required()
+        }),
+        onSubmit: (formData)=>{
+            console.log(formData);
+            dispatch(increment());
+            dispatch(postAnswers(formData));
+        }
+    })
 
     return(
         <>
-            {status!=='loading'&&attempt>=3&&(<span>se han execedido los intentos de para contestar el formulario.</span>)}
-            <pre>{JSON.stringify(error,4,null)}</pre>
-            <pre>{JSON.stringify(status,4,null)}</pre>
-            <pre>{JSON.stringify(answers,4,null)}</pre>
-            <pre>{JSON.stringify(attempt,4,null)}</pre>
-            <button disabled={attempt>=3} onClick={() => onClick() }>Add to note</button>
             
+            {attempt>=3&& status !== 'loading'&&(<span>Se han completado los 3 intentos para completar este formulario</span>)}
+            <form onSubmit={formik.handleSubmit}>
+                <input 
+                    type="text" 
+                    placeholder="question" 
+                    name="question" 
+                    onChange={formik.handleChange}/>
+                    {formik.errors.question && formik.touched.question && (
+                        <div className="">{formik.errors.question}</div>
+                    )}
+                <button disabled={attempt>=3} type="submit">submit</button>
+                <button type="button">clean</button>
+            </form>
         </>
     )
 }
